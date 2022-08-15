@@ -132,7 +132,7 @@
       cursor: pointer;
       top: 60px;
       left: 0;
-      width: 100%;
+      width: calc(100% - 60px); /* Porque salió un scroll horizontal.*/
       padding: 24px;
     }
     .mobile-menu a {
