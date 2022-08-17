@@ -3,12 +3,16 @@ const desktopMenu = document.querySelector('.desktop-menu');
 const menuBurger = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarIcon = document.querySelector('.navbar-shopping-cart');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 const cardsContainer = document.querySelector('.cards-container');
+const productDetailContainer = document.querySelector('#productDetail');
+
 
 navEmail.addEventListener('click', toggleDesktopMenu);
 menuBurger.addEventListener('click', toggleMobileMenu);
 menuCarIcon.addEventListener('click', toogleCarAside);
+productDetailCloseIcon.addEventListener ('click', closeProductDetailAside);
 
 function toggleDesktopMenu(){
   const isAsideClose = shoppingCartContainer.classList.contains('inactive');
@@ -25,6 +29,9 @@ function toggleMobileMenu(){
   if (!isAsideClose){
     shoppingCartContainer.classList.add('inactive'); //Si el aside está abierto, se va a cerrar para que se muestre el mobileMenu.
   }
+
+  closeProductDetailAside();//Para que se cierre el product detail cada que se quiera abrir el menú en mobile.
+
   mobileMenu.classList.toggle('inactive');
 }
 
@@ -34,7 +41,24 @@ function toogleCarAside(){
   if(!isMobileMenuClose){ //Si el mobileMenu no está cerrado, cuando se de click en el carrito, se va a cerrar para mostrar el menuCarIcon.
     mobileMenu.classList.add('inactive');
   }
+
+  const isProductDetailClosed = productDetailContainer.classList.contains('inactive'); //para que al abrir el carrito, el product detail se cierre.
+  
+  if(!isProductDetailClosed){ 
+    productDetailContainer.classList.add('inactive');
+  }
+
   shoppingCartContainer.classList.toggle('inactive'); 
+}
+
+function openProductDetailAside(){
+  shoppingCartContainer.classList.add('inactive');   //para que si alguien abrió primero el carrito de compras y luego abrió el product detail, si desea volver a abrir el carrito de compras, este sea abierto, en lugar de cerrase.
+  productDetailContainer.classList.remove('inactive') //para que se abra el product detail cuando se le haga click a una imagen.
+
+}
+
+function closeProductDetailAside(){
+  productDetailContainer.classList.add('inactive')
 }
 
 const productList = [];
@@ -44,16 +68,30 @@ productList.push({
   image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 });
 productList.push({
-  name:'Laptop',
-  price: 810,
+  name:'Bike',
+  price: 120,
   image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 });
 productList.push({
-  name:'Earphones',
-  price: 75,
+  name:'Bike',
+  price: 120,
   image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 });
-
+productList.push({
+  name:'Bike',
+  price: 120,
+  image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
+productList.push({
+  name:'Bike',
+  price: 120,
+  image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
+productList.push({
+  name:'Bike',
+  price: 120,
+  image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+});
 /* 
 <div class="product-card">
         <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
@@ -75,6 +113,7 @@ productList.map(function (product){
 
   const productImg = document.createElement('img');
   productImg.setAttribute('src', product.image);
+  productImg.addEventListener('click', openProductDetailAside);
 
   const productInfo = document.createElement('div');
   productInfo.classList.add('product-info');  
